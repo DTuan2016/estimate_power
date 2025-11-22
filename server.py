@@ -8,12 +8,11 @@ app = Flask(__name__)
 import argparse
 
 parser = argparse.ArgumentParser(description="Run PZEM Flask server")
-parser.add_argument("--csv", type=str, default="pzem_log.csv", help="Tên file CSV để lưu dữ liệu")
+parser.add_argument("--csv", type=str, default="pzem_log.csv", help="File CSV")
 args = parser.parse_args()
 
 CSV_FILE = args.csv
 
-# Nếu chưa có file, tạo và thêm header
 if not os.path.exists(CSV_FILE):
     with open(CSV_FILE, "w", newline="") as f:
         writer = csv.writer(f)
@@ -44,5 +43,4 @@ def receive_pzem():
         return jsonify({"status":"error", "msg": str(e)}), 500
 
 if __name__ == "__main__":
-    # Chạy server trên mọi interface, port 5000
     app.run(host="0.0.0.0", port=5000)
